@@ -1,0 +1,31 @@
+<!-- base.html -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %} {% endblock %}</title>
+        <!-- Add Tailwind CSS styles -->
+        <link
+            rel="stylesheet"
+            href="{{url_for('static',filename='css/main.css')}}"
+        />
+    </head>
+
+    <body>
+        <div>
+            <div class="p-4 text-xl bg-white">
+                <div class="mx-auto max-w-6xl flex flex-auto justify-between">
+                    <div class="font-medium">
+                        Flask WebApp : Addition of 2 Numbers using Intel SGX
+                    </div>
+                    <div class="font-medium">
+                        {% block username %} {% endblock %}
+                    </div>
+                </div>
+            </div>
+            <div class="w-full max-w-xs mx-auto my-10">
+                {% block content %} {% endblock %}
+            </div>
+        </div>
+    </body>
+</html>
