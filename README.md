@@ -13,12 +13,37 @@ This project demo showcases the integration of Intel SGX technology into web app
 
 ## How to
 
-First enable Intel SGX in BIOS/UEFI settings then install SGX Linux Drivers ([Guide](https://docs.scrt.network/secret-network-documentation/infrastructure/node-runners/node-setup/install-sgx)) and [Intel SGX Linux SDK](https://github.com/intel/linux-sgx) & [Intel SGX Linux PSW](https://github.com/intel/linux-sgx)
+1. Enable Intel SGX in BIOS/UEFI settings
+2. Install SGX Linux Drivers ([Guide](https://docs.scrt.network/secret-network-documentation/infrastructure/node-runners/node-setup/install-sgx)) and [Intel SGX Linux SDK](https://github.com/intel/linux-sgx) & [Intel SGX Linux PSW](https://github.com/intel/linux-sgx) manually or using install-sgx.sh
+
+```bash
+chmod +x ./install-sgx.sh
+
+# flags : Deps=true SDK=true PSW=true Driver=false
+sudo ./install-sgx.sh true true true false
+
+```
+
+### Run app
+
+Generate app binary file and run it
 
 ```bash
 # generate files to run in sgx enclave
   make
 
+# run generated app
+  ./app
+
+# clean generated files
+  make clean
+```
+
+### Using Flask webapp
+
+Generate app.so shared object to run function from flask
+
+```bash
 # generate shared object files
   make so
 
@@ -28,7 +53,7 @@ First enable Intel SGX in BIOS/UEFI settings then install SGX Linux Drivers ([Gu
 # run Flask server
   python3 main.py
 
-# clean generated binary files
+# clean generated files
   make clean
 ```
 
