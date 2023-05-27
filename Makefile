@@ -252,7 +252,7 @@ endif
 .PHONY: clean
 
 clean:
-	@rm -f .config_* $(App_Name) $(App_Name).so $(Enclave_Name) $(Signed_Enclave_Name) $(App_Cpp_Objects) App/Enclave_u.* $(Enclave_Cpp_Objects) Enclave/Enclave_t.*
+	@rm -f .config_* $(App_Name) $(App_Name).so $(Enclave_Name) $(Signed_Enclave_Name) $(App_Cpp_Objects) App/Enclave_u.* $(Enclave_Cpp_Objects) Enclave/Enclave_t.* $(Enclave_Test_Key)
 
 
 .PHONY: so
