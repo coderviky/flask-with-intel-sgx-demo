@@ -49,7 +49,20 @@ enclave {
      *  [string]: specifies 'str' is a NULL terminated buffer.
      */
     untrusted {
-         
+         void ocall_print_string([in, string] const char *str);
+
+         /* for fbytes ocalls */
+        int ocall_save_fbytes(
+            [in, size=sealed_size]const uint8_t* sealed_data, 
+            size_t sealed_size
+        );
+
+        int ocall_load_fbytes(
+            [out, size=sealed_size]uint8_t* sealed_data, 
+            size_t sealed_size
+        );
+
+        int ocall_is_fbytes(void);
     };
 
     /*  int ocall_addition(int a, int b); 

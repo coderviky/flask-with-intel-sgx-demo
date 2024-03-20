@@ -37,9 +37,14 @@
 #include <pwd.h>
 #define MAX_PATH FILENAME_MAX
 
+#include <cstring>
+#include <fstream>
+
 #include "sgx_urts.h"
 #include "App.h"
 #include "Enclave_u.h"
+
+using namespace std;
 
 /* Global EID shared by multiple threads */
 sgx_enclave_id_t global_eid = 0;
@@ -209,6 +214,44 @@ void ocall_print_string(const char *str)
      * the input string to prevent buffer overflow.
      */
     printf("%s", str);
+}
+
+//
+
+// fbytes ocall
+int ocall_save_fbytes(const uint8_t *sealed_data, const size_t sealed_size)
+{
+    ofstream file(FBYTES_FILE, ios::out | ios::binary);
+    if (file.fail())
+    {
+        return 1;
+    }
+    file.write((const char *)sealed_data, sealed_size);
+    file.close();
+    return 0;
+}
+
+int ocall_load_fbytes(uint8_t *sealed_data, const size_t sealed_size)
+{
+    ifstream file(FBYTES_FILE, ios::in | ios::binary);
+    if (file.fail())
+    {
+        return 1;
+    }
+    file.read((char *)sealed_data, sealed_size);
+    file.close();
+    return 0;
+}
+
+int ocall_is_fbytes(void)
+{
+    ifstream file(FBYTES_FILE, ios::in | ios::binary);
+    if (file.fail())
+    {
+        return 0;
+    } // failure means no fbytes found
+    file.close();
+    return 1;
 }
 
 /* Application entry */

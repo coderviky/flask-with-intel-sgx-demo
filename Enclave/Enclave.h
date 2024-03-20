@@ -29,19 +29,42 @@
  *
  */
 
-
 #ifndef _ENCLAVE_H_
 #define _ENCLAVE_H_
 
 #include <stdlib.h>
 #include <assert.h>
 
+// sealing
+#include "sgx_trts.h"
+#include "sgx_tseal.h"
+
+#include "string.h"
+
 #if defined(__cplusplus)
-extern "C" {
+extern "C"
+{
 #endif
 
-// void printf(const char *fmt, ...);
-int addition(int a, int b);
+    // ------ glib GByteArray ---------
+    typedef unsigned int guint;
+
+    typedef unsigned char guint8;
+
+    typedef struct _GByteArray
+    {
+        guint8 *data;
+        guint len;
+    } GByteArray;
+
+    typedef struct _FByteArray
+    {
+        char data[10000]; // 30k is working
+        int len;
+    } FByteArray;
+
+    // void printf(const char *fmt, ...);
+    int addition(int a, int b);
 
 #if defined(__cplusplus)
 }

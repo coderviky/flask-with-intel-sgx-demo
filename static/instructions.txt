@@ -1,8 +1,0 @@
-## install node modules from package.json
->  npm install
-
-
-
-## To generate tailwind css from html files (for development)
->  cd static
->  npx tailwindcss -i ./src/style.css -o css/main.css --watch
