@@ -53,12 +53,14 @@
 
 extern sgx_enclave_id_t global_eid; /* global enclave id */
 
+#define FBYTES_FILE "fbytes.seal"
+
 #if defined(__cplusplus)
 extern "C"
 {
 #endif
 
-#define FBYTES_FILE "fbytes.seal"
+    // #define FBYTES_FILE "fbytes.seal"
 
 #if defined(__cplusplus)
 }

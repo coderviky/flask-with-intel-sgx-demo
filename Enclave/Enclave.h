@@ -42,7 +42,8 @@
 #include "string.h"
 
 // printf
-#include <cstdio>
+// #include <cstdio>
+#include <stdio.h>
 
 #if defined(__cplusplus)
 extern "C"

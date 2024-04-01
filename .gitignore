@@ -1,6 +1,9 @@
 
 .vscode
 
+#
+fbytes.seal
+
 # Ignore generated files by makefile
 App/Enclave_u.c
 App/Enclave_u.h
