@@ -41,6 +41,9 @@
 
 #include "string.h"
 
+// printf
+#include <cstdio>
+
 #if defined(__cplusplus)
 extern "C"
 {

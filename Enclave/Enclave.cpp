@@ -6,17 +6,6 @@
 #include "Enclave.h"
 #include "Enclave_t.h" /* print_string */
 
-// include json.hpp
-#include <json.hpp>
-using namespace json;
-
-
-// to convert json char * plaintext to std::string
-std::string uint8PtrToString(const char *plaintext, size_t length)
-{
-    return std::string(reinterpret_cast<const char *>(plaintext), length);
-}
-
 // -------- SEALING & UNSEALING Functions
 sgx_status_t seal_fbytes(const FByteArray *fbytes, sgx_sealed_data_t *sealed_data, size_t sealed_size)
 {
@@ -29,7 +18,6 @@ sgx_status_t unseal_fbytes(const sgx_sealed_data_t *sealed_data, FByteArray *pla
 }
 
 // -------------------------------------------
-
 
 /*
  * printf:
@@ -45,41 +33,18 @@ void printf(const char *fmt, ...)
     ocall_print_string(buf);
 }
 
-
-
 int addition(int a, int b)
 {
 
     sgx_status_t ocall_status, sealing_status;
     int ocall_ret;
 
-    // Now you can use json objects
-    JSON j;
-    j["key"] = 4;
-
-    // printf("Enclave.cpp : addition(%d, %d) \n", a,b);
-
-    // --------- new json
-
-    j["text"] = "Hello";
-
-    // count string length of "text"
-    int len = j["text"].ToString().length();
-
-    // json to string for storage or transmission
-    std::string str = j.dump();
-
-    // print string
-    printf("Enclave.cpp : addition() str -> %s\n", str.c_str());
-
-
     // --------------------------------- SEALING & UNSEALING START
     // seal fbytes
     FByteArray *fbytes = (FByteArray *)malloc(sizeof(FByteArray));
     // hello world in fbytes->data where data is char[10000]
-    // strncpy(fbytes->data, "hello world", strlen("hello world") + 1);
+    strncpy(fbytes->data, "hello world", strlen("hello world") + 1);
     // store json string to fbytes->data and length is str length
-    strncpy(fbytes->data, str.c_str(), str.length() + 1);
     fbytes->len = strlen(fbytes->data);
     size_t sealed_fbytes_size = sizeof(sgx_sealed_data_t) + sizeof(FByteArray);
     uint8_t *sealed_fbytes_data = (uint8_t *)malloc(sealed_fbytes_size);
@@ -122,15 +87,6 @@ int addition(int a, int b)
     printf("Enclave.cpp : addition() loaded_fbytes->data -> %s\n", loaded_fbytes->data);
 
     // --------------------------------- SEALING & UNSEALING END
-
-    // convert loaded fbytes->data to string for json parsing
-    std::string plaintext_str = uint8PtrToString(loaded_fbytes->data, strlen(loaded_fbytes->data));
-
-    // // parse string to new json object
-    JSON j2 = JSON::Load(plaintext_str);
-
-    // // print string text
-    printf("Enclave.cpp : addition() j2[text] -> %s & j2[key] -> %d \n", j2["text"].ToString().c_str(), j2["key"].ToInt());
 
     // return sum
     return a + b;
